@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
+import * as path from "path";
 
 async function run() {
   try {
@@ -16,7 +17,7 @@ async function run() {
     }
 
     const client = new github.GitHub(token);
-    const configurationContent: JSON = JSON.parse(JSON.stringify(yaml.load(fs.readFileSync(configPath, 'utf8'), {json: true})));
+    const configurationContent: JSON = JSON.parse(JSON.stringify(yaml.load(fs.readFileSync(path.resolve(__dirname, configPath)), {json: true})));
 
     core.debug("remove assignees.")
     const issue: JSON = JSON.parse(JSON.stringify(github.context.payload.issue));
